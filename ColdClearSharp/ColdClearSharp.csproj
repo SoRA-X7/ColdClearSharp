@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageVersion>0.1.0</PackageVersion>
+        <Title>ColdClearSharp</Title>
+        <Description>.NET version of MinusKelvin's Cold Clear bot.
+Currently work in progress.</Description>
+    </PropertyGroup>
+
+</Project>
