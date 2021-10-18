@@ -21,6 +21,7 @@ namespace ColdClearSharp {
 
         public async Task<(CCMove move, CCPlanPlacement[] plan)?> NextMove(uint incomingGarbage) {
             return await Task.Run(() => {
+                RequestNextMove(incomingGarbage);
                 var move = new CCMove();
                 var planLength = 32U;
                 var plan = new CCPlanPlacement[planLength];
