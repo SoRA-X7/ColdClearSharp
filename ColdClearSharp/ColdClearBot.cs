@@ -8,11 +8,11 @@ namespace ColdClearSharp {
         private IntPtr bot;
 
         public ColdClearBot() {
-            bot = cc_launch_async(DefaultOptions, DefaultWeights, (IntPtr) null, new CCPiece[0], 0);
+            bot = cc_launch_async(DefaultOptions, DefaultWeights, (IntPtr)null, Array.Empty<CCPiece>(), 0);
         }
 
         public ColdClearBot(CCOptions options, CCWeights weights) {
-            bot = cc_launch_async(options, weights, (IntPtr) null, new CCPiece[0], 0);
+            bot = cc_launch_async(options, weights, (IntPtr)null, Array.Empty<CCPiece>(), 0);
         }
 
         public void AddNextPiece(CCPiece piece) {
@@ -22,12 +22,13 @@ namespace ColdClearSharp {
         public async Task<(CCMove move, CCPlanPlacement[] plan)?> NextMove(uint incomingGarbage) {
             return await Task.Run(() => {
                 var move = new CCMove();
-                var plan = new CCPlanPlacement[32];
-                var status =  cc_block_next_move(bot, move, plan, out var planLength);
+                var planLength = 32U;
+                var plan = new CCPlanPlacement[planLength];
+                var status = cc_block_next_move(bot, move, plan, ref planLength);
                 if (status == CCBotPollStatus.MoveProvided) {
-                    return (move, plan.Take((int) planLength).ToArray());
+                    return (move, plan.Take((int)planLength).ToArray());
                 } else {
-                    return ((CCMove, CCPlanPlacement[])?) null;
+                    return ((CCMove, CCPlanPlacement[])?)null;
                 }
             });
         }
@@ -38,9 +39,10 @@ namespace ColdClearSharp {
 
         public CCBotPollStatus PollNextMove(out CCMove move, out CCPlanPlacement[] plan) {
             move = new CCMove();
-            plan = new CCPlanPlacement[32];
-            var status = cc_poll_next_move(bot, move, plan, out var planLength);
-            plan = plan.Take((int) planLength).ToArray();
+            var planLength = 32U;
+            plan = new CCPlanPlacement[planLength];
+            var status = cc_poll_next_move(bot, move, plan, ref planLength);
+            plan = plan.Take((int)planLength).ToArray();
             return status;
         }
 
@@ -60,7 +62,7 @@ namespace ColdClearSharp {
         ~ColdClearBot() {
             ReleaseUnmanagedResources();
         }
-        
+
         public static CCOptions DefaultOptions {
             get {
                 var options = new CCOptions();
@@ -68,7 +70,7 @@ namespace ColdClearSharp {
                 return options;
             }
         }
-        
+
         public static CCWeights DefaultWeights {
             get {
                 var weights = new CCWeights();
@@ -76,7 +78,7 @@ namespace ColdClearSharp {
                 return weights;
             }
         }
-        
+
         public static CCWeights FastWeights {
             get {
                 var weights = new CCWeights();

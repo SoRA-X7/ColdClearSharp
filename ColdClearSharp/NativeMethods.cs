@@ -47,7 +47,7 @@ namespace ColdClearSharp {
             IntPtr bot,
             [Out] CCMove move,
             [Out] CCPlanPlacement[] plan,
-            out uint plan_length
+            ref uint plan_length
         );
         
         [DllImport(CC_DLL)]
@@ -55,7 +55,7 @@ namespace ColdClearSharp {
             IntPtr bot,
             [Out] CCMove move,
             [Out] CCPlanPlacement[] plan,
-            out uint plan_length
+            ref uint plan_length
         );
         
         [DllImport(CC_DLL)]
