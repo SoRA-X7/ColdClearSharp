@@ -68,7 +68,7 @@ namespace ColdClearSharp {
         internal static extern void cc_fast_weights([Out] CCWeights weights);
         
         [DllImport(CC_DLL)]
-        internal static extern IntPtr cc_load_book_from_file(string path);
+        internal static extern IntPtr cc_load_book_from_file([MarshalAs(UnmanagedType.LPStr)] string path);
         
         [DllImport(CC_DLL)]
         internal static extern void cc_destroy_book(IntPtr book);
